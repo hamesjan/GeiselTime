@@ -20,9 +20,11 @@ class ViewController: UIViewController {
     @IBAction func startButtonPressed(_ sender: Any) {
 //        startButton.isHidden = true
 //        endButton.isHidden = false
-        if pressed == false{
+        if pressed == false
+        {
             pressed = true
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ViewController.updateTimer), userInfo: nil, repeats: true)
+            RunLoop.current.add(timer, forMode: .common)
         }
     }
 
@@ -36,7 +38,22 @@ class ViewController: UIViewController {
 
     @objc func updateTimer() {
         time += 1
-        timerLabel.text = String(time)
+        let format = secToHourMinSec(seconds: time)
+        timerLabel.text = makeTimeString(hours: format.0, minutes: format.1, seconds: format.2)
+    }
+    func secToHourMinSec(seconds: Int) -> (Int, Int, Int)
+    {
+        return ((seconds / 3600), ((seconds % 3600) / 60),((seconds % 3600) % 60))
+    }
+    func makeTimeString(hours: Int, minutes: Int, seconds : Int) -> String
+    {
+        var timeString = ""
+        timeString += String(format: "0%2d", hours)
+        timeString += " : "
+        timeString += String(format: "0%2d", minutes)
+        timeString += " : "
+        timeString += String(format: "0%2d", seconds)
+        return timeString
     }
     
     private let imageView: UIImageView = {

@@ -14,17 +14,20 @@ class ViewController: UIViewController {
 
     var timer = Timer()
     var time = 0
-
+    var pressed = false
 
 
     @IBAction func startButtonPressed(_ sender: Any) {
 //        startButton.isHidden = true
 //        endButton.isHidden = false
-
+        if pressed == false{
+            pressed = true
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ViewController.updateTimer), userInfo: nil, repeats: true)
+        }
     }
 
     @IBAction func endButtonPressed(_ sender: Any) {
+        pressed = false
         timer.invalidate()
 
 //        startButton.isHidden = false
